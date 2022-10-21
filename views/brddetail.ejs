@@ -1,0 +1,35 @@
+<% if(!userData) { %>
+    <script>
+        alert("비회원은 접근할 수 없는 페이지입니다");
+        location.href = "/login";
+    </script>
+<% } %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 목록페이지</title>
+</head>
+<body>
+    <%- include("common/header.ejs") %>
+    <div id="container">
+        <div class="brd_center">
+           <div><%- brdData.brdid %></div>
+           <div><%- brdData.brdtitle %></div>
+           <div><%- brdData.brdcontext %></div>
+           <div><%- brdData.brdauther %></div>
+           <div><!-- 작성시간 출력 --></div>
+        </div>
+        <!-- server.js에서 넘겨준 userData에 있는 nick 과
+             데이터베이스에서 가지고온 brdData에 있는 nick과 일치하면수정 삭제 버튼이 보인다.-->
+        <% if(userData.joinnick === brdData.brdauther) { %>
+        <a href="#">수정</a>
+        <a href="#">삭제</a>
+        <% } %>
+        <a href="/brdlist">목록</a>
+    </div>
+</body>
+</html>

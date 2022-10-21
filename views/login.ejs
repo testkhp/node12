@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 페이지</title>
+</head>
+<body>
+    <div id="login_container">
+        <div class="center">
+            <form id="login_form" action="/loginresult" method="post">
+                <div class="line">
+                    <input type="text" name="userid" placeholder="아이디입력해주세요">
+                </div>
+                <div class="line">
+                    <input type="text" name="userpass" placeholder="비밀번호입력해주세요">
+                </div>
+                <button id="loginBtn" type="submit">로그인</button>
+                <a href="/join">회원가입</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

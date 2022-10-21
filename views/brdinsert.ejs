@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 작성페이지</title>
+</head>
+<body>
+    <%- include("common/header.ejs") %>
+    <div id="container">
+        <div class="brd_center">
+            <form id="brd_form" action="/add" method="post">
+                <input type="text" name="title">
+                <textarea name="context"></textarea>
+                <button type="submit">게시글 작성</button>
+                <a href="/brdlist">목록</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

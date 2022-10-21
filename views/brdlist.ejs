@@ -1,0 +1,40 @@
+<% if(!userData) { %>
+    <script>
+        alert("비회원은 접근할 수 없는 페이지입니다");
+        location.href = "/login";
+    </script>
+<% } %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 목록페이지</title>
+</head>
+<body>
+    <%- include("common/header.ejs") %>
+    <div id="container">
+        <div class="brd_center">
+            <table>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성시간</th>
+                </tr>
+                <% for(let i=0; i < brdData.length; i++){ %>
+                <tr>
+                    <td><%- brdData[i].brdid %></td>
+                    <td><a href="/brddetail/<%- brdData[i].brdid %>"><%- brdData[i].brdtitle %></a></td>
+                    <td><%- brdData[i].brdauther %></td>
+                    <td><!-- 작성시간 출력--></td>
+                </tr>
+                <% } %>
+            </table>
+            <a href="/brdinsert">게시글작성</a>
+        </div>
+    </div>
+</body>
+</html>
