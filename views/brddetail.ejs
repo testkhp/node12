@@ -12,6 +12,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시글 목록페이지</title>
+    <style>
+        * { margin:0; padding:0;}
+        .comment { border:1px solid red;}
+        .comment textarea {width:300px; height:200px; resize:none; }
+        .comment_box { margin:30px 0; border:1px solid green;}
+        .comupdate_form { display:none;}
+    </style>
 </head>
 <body>
     <%- include("common/header.ejs") %>
@@ -30,6 +37,75 @@
         <a href="#">삭제</a>
         <% } %>
         <a href="/brdlist">목록</a>
+
+        <!-- 해당 게시글 페이지내에서 댓글입력하는 구간-->
+        <div class="comment">
+            <form id="comment_form" action="/addcomment" method="post">
+                <!--댓글입력시 해당 게시글의 번호값도 같이 전송
+                    댓글은 어떤 게시글안에 소속될 것인지 표시하기 위해서!
+                -->
+                <input type="hidden" name="prdid" value="<%- brdData.brdid %>">
+                <textarea name="comment_text"></textarea>
+                <button type="submit">댓글등록</button>
+            </form>
+        </div>
+        <!-- 댓글 출력 구간-->
+        <% for(let i=0; i < commentData.length; i++) { %>
+        <div class="comment_box">
+            <div class="comment_context"><%- commentData[i].comContext %></div>
+            <div class="comment_auther"><%- commentData[i].comAuther %></div>
+            <div class="comment_date"><%- commentData[i].comDate %></div>
+            <% if(userData.joinnick === commentData[i].comAuther) { %>
+            <div class="comment_btn">
+                <a class="update_comment" href="#">댓글수정</a>
+                <a class="del_comment" href="/deletecomment/<%- commentData[i].comNo %>">댓글삭제</a>
+            </div>
+            <form class="comupdate_form" action="/updatecomment" method="post">
+                 <input type="hidden" name="comNo" value="<%- commentData[i].comNo %>">
+                 <textarea class="comContext" name="comContext"><%- commentData[i].comContext %></textarea>
+                 <button class="comment_ok" type="submit">작성완료</button>
+                 <button class="comment_no" type="button">작성취소</button>
+            </form>
+            <% } %>
+        </div>
+        <% } %>
     </div>
+    <script>
+        //댓글수정 a태그들 선택
+        const uptCom = document.querySelectorAll(".update_comment");
+        //댓글수정 버튼을 클릭시 나올 폼태그
+        const comuptForm = document.querySelectorAll(".comupdate_form");
+        //작성취소 버튼들 선택
+        const comCancel = document.querySelectorAll(".comment_no");
+        //댓글 수정 textarea 들 선택
+        const comContext = document.querySelectorAll(".comContext");
+        
+        //작성취소를 눌렀을 때 원래 댓글의 내용으로 리셋시키기 위한 변수
+        let originText = [];
+
+        //반복문 사용해서 댓글수정 a태그에 클릭기능 이벤트 달아줌
+        for(let i=0; i < uptCom.length; i++){
+            uptCom[i].addEventListener("click",function(e){
+                e.preventDefault(); //페이지 이동 금지
+                uptCom[i].style.display = "none";
+                //클릭한 해당 댓글수정 a태그만 화면에 안보이게 처리
+                comuptForm[i].style.display = "block";
+                //해당 수정 폼태그만 화면에 나오게 처리
+                originText[i] = comContext[i].value;
+                //해당 댓글수정 textarea태그의 텍스트를 변수에 대입
+            });
+
+            //작성취소 버튼들에 이벤트 달아줌
+            comCancel[i].addEventListener("click",function(){
+                comuptForm[i].style.display = "none";
+                uptCom[i].style.display = "inline"; 
+                //만약 버튼디자인을 block flex 쓰셨다면 똑같이 맞출것
+                comContext[i].value = originText[i];
+                //textarea태그의 텍스트 내용을 변수안에 있는 텍스트로 교체
+            });
+        }
+
+
+    </script>
 </body>
 </html>
