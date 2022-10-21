@@ -19,7 +19,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-MongoClient.connect("atlas 사이트의 본인 db주소 연결",function(err,result){
+MongoClient.connect("mongodb+srv://admin:qwer1234@testdb.bsly6wn.mongodb.net/?retryWrites=true&w=majority",function(err,result){
     //에러가 발생했을경우 메세지 출력(선택사항)
     if(err) { return console.log(err); }
 
